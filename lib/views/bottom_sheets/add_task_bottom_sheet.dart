@@ -61,7 +61,7 @@ class AddTaskBottomSheet extends StatelessWidget {
                   ),
                   autofocus: true,
                   autocorrect: false,
-                  cursorColor: Colors.green,
+                  //cursorColor: Colors.green,
                   textAlign: TextAlign.center,
                   textAlignVertical: TextAlignVertical.center,
                 ),

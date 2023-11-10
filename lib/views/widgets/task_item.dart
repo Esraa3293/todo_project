@@ -4,8 +4,6 @@ import 'package:todo_project/models/task_model.dart';
 import 'package:todo_project/view_models/app_view_model.dart';
 import 'package:todo_project/views/edit_task.dart';
 
-import '../bottom_sheets/edit_task_bottom_sheet.dart';
-
 class TaskItem extends StatelessWidget {
   final TaskModel task;
 
@@ -49,7 +47,8 @@ class TaskItem extends StatelessWidget {
               title: Text(task.title),
               trailing: IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, EditTask.routeName, arguments: task);
+                    Navigator.pushNamed(context, EditTask.routeName,
+                        arguments: task);
                     //viewModel.showBottomSheet(EditTaskBottomSheet(), context);
                   },
                   icon: const Icon(Icons.edit_calendar_outlined)),

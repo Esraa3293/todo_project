@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_project/models/task_model.dart';
-import 'package:todo_project/views/home_layout/tabs/task_screen.dart';
 import 'package:todo_project/views/home_layout/tabs/task_info_screen.dart';
+import 'package:todo_project/views/home_layout/tabs/task_screen.dart';
+
+import '../models/user_model.dart';
 
 class AppViewModel extends ChangeNotifier {
   List<Widget> tabs = [const TaskTab(), const TaskInfoTab()];
@@ -51,6 +54,16 @@ class AppViewModel extends ChangeNotifier {
     return getTasksCollection().doc(id).update(task.toJson());
   }
 
+  CollectionReference<UserModel> getUsersCollection() {
+    return FirebaseFirestore.instance
+        .collection("Users")
+        .withConverter<UserModel>(
+          fromFirestore: (snapshot, options) =>
+              UserModel.fromJson(snapshot.data()!),
+          toFirestore: (user, options) => user.toJson(),
+        );
+  }
+
   void chooseDate(BuildContext context) async {
     DateTime? selectedDate = await showDatePicker(
       context: context,
@@ -78,5 +91,23 @@ class AppViewModel extends ChangeNotifier {
         return bottomSheetView;
       },
     );
+  }
+
+  static void createAccount(String email, String password) async {
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print(e.message);
+      } else if (e.code == 'email-already-in-use') {
+        print(e.message);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

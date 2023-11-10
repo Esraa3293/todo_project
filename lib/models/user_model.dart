@@ -1,28 +1,28 @@
-class User {
-  String imagePath;
+class UserModel {
+  String id;
   String name;
+  String phone;
   String email;
-  String about;
 
-  User(
-      {required this.imagePath,
+  UserModel(
+      {this.id = "",
       required this.name,
-      required this.email,
-      required this.about});
+      required this.phone,
+      required this.email});
 
-  User.fromJson(Map<String, dynamic> json)
+  UserModel.fromJson(Map<String, dynamic> json)
       : this(
-            imagePath: json['imagePath'],
+            id: json['id'],
             name: json['name'],
-            email: json['email'],
-            about: json['about']);
+            phone: json['phone'],
+            email: json['email']);
 
   Map<String, dynamic> toJson() {
     return {
-      "imagePath": imagePath,
+      "id": id,
       "name": name,
+      "phone": phone,
       "email": email,
-      "about": about,
     };
   }
 }

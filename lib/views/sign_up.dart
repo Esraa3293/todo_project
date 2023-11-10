@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_project/view_models/app_view_model.dart';
 import 'package:todo_project/views/home_layout/home_layout.dart';
 import 'package:todo_project/views/login_screen.dart';
 
@@ -56,7 +57,13 @@ class SignUp extends StatelessWidget {
                         const SizedBox(
                           height: 6,
                         ),
-                        TextField(
+                        TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter username";
+                            }
+                            return null;
+                          },
                           controller: name,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
@@ -95,7 +102,13 @@ class SignUp extends StatelessWidget {
                         const SizedBox(
                           height: 6,
                         ),
-                        TextField(
+                        TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter phone";
+                            }
+                            return null;
+                          },
                           controller: phone,
                           keyboardType: TextInputType.phone,
                           decoration: InputDecoration(
@@ -228,6 +241,8 @@ class SignUp extends StatelessWidget {
                         ElevatedButton(
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
+                              AppViewModel.createAccount(
+                                  email.text, password.text);
                               Navigator.pushReplacementNamed(
                                   context, HomeLayout.routeName);
                             }
